@@ -26,6 +26,8 @@ public class TicTacToeViewer extends JFrame
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setVisible(true);
     }
+
+    // Paints the grid and is overrided because there is already a default paint method.
     @Override
     public void paint(Graphics g)
     {
