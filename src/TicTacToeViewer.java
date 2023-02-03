@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-public class TicTacToeViewer extends JFrame{
+public class TicTacToeViewer extends JFrame
+{
     // TODO: Complete this class
     private TicTacToe t;
     private final int WINDOW_WIDTH = 800;
