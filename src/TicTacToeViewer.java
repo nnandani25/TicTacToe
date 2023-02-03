@@ -2,23 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 public class TicTacToeViewer extends JFrame{
     // TODO: Complete this class
-
     private TicTacToe t;
-    private Image x;
-    private Image o;
-
-    private Square s;
-    public final int WINDOW_WIDTH = 800;
-    public final int WINDOW_HEIGHT = 800;
-    public final int BOARD_HEIGHT = 174;
-    public final int BOARD_WIDTH = 174;
+    private final int WINDOW_WIDTH = 800;
+    private final int WINDOW_HEIGHT = 800;
+    private final int ALL_SQUARE_WIDTH = 540;
+    private final int SQUARE_WIDTH = 180;
+    private Image[] images;
+    private Square[][] sq;
     public TicTacToeViewer(TicTacToe t)
     {
+        // Initializes the TicTacToe object.
         this.t = t;
-        x = new ImageIcon("Resources/X.png").getImage();
-        o = new ImageIcon("Resources/O.png").getImage();
-        //images[1] = new ImageIcon("Resources/O.png").getImage();
 
+        // Initializes the Image array and fills it with the x and o images.
+        images = new Image[2];
+        images[0] = new ImageIcon("Resources/X.png").getImage();
+        images[1] = new ImageIcon("Resources/O.png").getImage();
+
+        // Sets up the windows: close operation, title, size, and visibility.
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("TicTacToe");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -27,46 +28,54 @@ public class TicTacToeViewer extends JFrame{
     @Override
     public void paint(Graphics g)
     {
-        //g.drawString("1", 225, 120);
-        g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
-        int x = 225;
-        int y = 120;
-        int y2 = 200;
+        // Gets the width of the space between the window and the board and adds the length of half of
+        // A square in order for reach the center of the first square.
+        int x = ((WINDOW_WIDTH - ALL_SQUARE_WIDTH)/2) + SQUARE_WIDTH/2;
 
-        Square[][] sq = t.getBoard();
+        // Gets the width of the blank space at the top and subtracts 20, so the numbers can be placed
+        // Above the board's line.
+        int y = ((WINDOW_WIDTH - ALL_SQUARE_WIDTH)/2) - 20;
+
+        // Sets the square 2D array to the board array from the TicTacToe class.
+        sq = t.getBoard();
+
+        // Traverses the 2D board array.
         for(int i = 0; i < sq.length; i++)
         {
+            // Sets the font and prints the numbers on the side of the board.
             g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
             g.setColor(Color.red);
             g.drawString(""+i, x, y);
-            x +=180;
+
+            // Does y-20, because the columns have slightly different dimensions than the rows.
+            g.drawString(""+i, y - 20, x);
+
+            // Increases x by the width of each individual square each time so the numbers are above
+            // Each square.
+            x += SQUARE_WIDTH;
+
+            // Continues to traverse through the array and draws each individual square.
             for(int j = 0; j < sq[0].length; j++)
             {
                 g.setColor(Color.black);
                 sq[i][j].draw(g, this);
             }
-            g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
-            g.setColor(Color.red);
-            g.drawString(""+i, 120, y2);
-            y2+=200;
         }
 
+        // Checks if there is a tie and if there is prints it.
         if(t.checkTie())
         {
             g.setColor(Color.black);
             g.setFont(new Font("TimesRoman", Font.ITALIC, 100));
-            g.drawString("ITS A TIE!", 200, 750);
+            g.drawString("IT'S A TIE!", SQUARE_WIDTH, (WINDOW_WIDTH - 50));
         }
 
     }
-    public Image getImageX()
-    {
-        return x;
-    }
 
-    public Image getImageO()
+    // Returns the image 2D array.
+    public Image[] getImages()
     {
-        return o;
+        return images;
     }
 
 }

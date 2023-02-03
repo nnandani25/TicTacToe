@@ -57,6 +57,8 @@ public class TicTacToe
         this.winner = BLANK;
         this.winIndex = -1;
         this.winDirection = -1;
+
+        // Initializes the TicTacToeViewer object, viewer.
         window = new TicTacToeViewer(this);
     }
 

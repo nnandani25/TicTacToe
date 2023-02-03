@@ -18,8 +18,8 @@ public class Square {
     private int row;
     private int col;
     private boolean isWinningSquare;
-
-    private int width = 150;
+    private final int SQUARE_WIDTH = 180;
+    private int width = 130;
 
 
     /**
@@ -65,44 +65,59 @@ public class Square {
         return this.marker;
     }
 
+    // Draws a single square and takes in a TicTacToeViewer object in order to have access to the images.
     public void draw(Graphics g, TicTacToeViewer b)
     {
-        int x = width + (row * b.BOARD_WIDTH);
-        int y = width + (col * b.BOARD_WIDTH);
-        g.setColor(Color.black);
-        g.drawRect(x, y, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+        // Gets the x and y coordinates of the square.
+        int y = width + (row * SQUARE_WIDTH);
+        int x = width + (col * SQUARE_WIDTH);
 
+        // Sets the color to black and draws the square.
+        g.setColor(Color.black);
+        g.drawRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+
+        // If the square is a winning square, it turns the background green and prints who wins.
         if(this.isWinningSquare == true)
         {
+            // Turns the background of the winning squares green.
             g.setColor(Color.green);
-            g.fillRect(y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+            g.fillRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
             g.setColor(Color.black);
+
+            // Checks if the winner is X and if so it redraws the X's on top of the green background.
+            // Prints that X wins.
             if(marker.equals(TicTacToe.X_MARKER))
             {
-                g.drawImage(b.getImageX(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+                g.drawImage(b.getImages()[0], x, y, SQUARE_WIDTH, SQUARE_WIDTH, b);
                 g.setColor(Color.black);
-                g.setFont(new Font("TimesRoman", Font.ITALIC, 100));
-                g.drawString("X WINS!", 250, 750);
-                g.drawRect(x, y, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                g.drawString("X WINS!", (SQUARE_WIDTH + 30), 750);
+                g.drawRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
             }
+
+            // Checks if the winner is O and if so it redraws the O's on top of the green background.
+            // Prints that O wins.
             else if(marker.equals(TicTacToe.O_MARKER))
             {
-                g.drawImage(b.getImageO(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+                g.drawImage(b.getImages()[1], x, y, SQUARE_WIDTH, SQUARE_WIDTH, b);
                 g.setColor(Color.black);
-                g.setFont(new Font("TimesRoman", Font.ITALIC, 100));
-                g.drawString("O WINS!", 250, 750);
-                g.drawRect(x, y, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                g.drawString("O WINS!", (SQUARE_WIDTH + 30), 750);
+                g.drawRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
             }
         }
 
+        // If the square isn't a winning square, it checks if the square is an X and if it is, it draws
+        // The X image.
         else if(marker.equals(TicTacToe.X_MARKER))
         {
-            g.drawImage(b.getImageX(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+            g.drawImage(b.getImages()[0], x, y, SQUARE_WIDTH, SQUARE_WIDTH, b);
         }
 
+        // Checks if the square is an O and if it is, it draws the O image.
         else if(marker.equals(TicTacToe.O_MARKER))
         {
-            g.drawImage(b.getImageO(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+            g.drawImage(b.getImages()[1], x, y, SQUARE_WIDTH, SQUARE_WIDTH, b);
         }
     }
 }
