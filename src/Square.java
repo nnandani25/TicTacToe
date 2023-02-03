@@ -19,7 +19,8 @@ public class Square {
     private int col;
     private boolean isWinningSquare;
 
-    private TicTacToeViewer b;
+    private int width = 150;
+
 
     /**
      * Constructor to initialize one Square of the
@@ -27,10 +28,10 @@ public class Square {
      * @param row the row the square is in
      * @param col the column the square is in
      */
-    public Square(int row, int col, TicTacToeViewer b) {
+    public Square(int row, int col) {
         this.row = row;
         this.col = col;
-        this.b = b;
+        //xi = new ImageIcon("Resources/X.png").getImage();
 
         this.marker = TicTacToe.BLANK;
         this.isWinningSquare = false;
@@ -64,16 +65,44 @@ public class Square {
         return this.marker;
     }
 
-    public void draw(Graphics g)
+    public void draw(Graphics g, TicTacToeViewer b)
     {
-//        int x = (b.WINDOW_WIDTH - b.BOARD_WIDTH)/2 + row * b.BOARD_WIDTH/3;
-//        int y = (b.WINDOW_WIDTH - b.BOARD_WIDTH)/2 + col * b.BOARD_WIDTH/3;
-        g.setColor(Color.MAGENTA);
-        g.drawRect(150, 150, 522, 522);
+        int x = width + (row * b.BOARD_WIDTH);
+        int y = width + (col * b.BOARD_WIDTH);
         g.setColor(Color.black);
-        int x = 150 + row *  174;
-        int y = 150 + col * 174;
         g.drawRect(x, y, b.BOARD_WIDTH, b.BOARD_HEIGHT);
 
+        if(this.isWinningSquare == true)
+        {
+            g.setColor(Color.green);
+            g.fillRect(y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+            g.setColor(Color.black);
+            if(marker.equals(TicTacToe.X_MARKER))
+            {
+                g.drawImage(b.getImageX(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+                g.setColor(Color.black);
+                g.setFont(new Font("TimesRoman", Font.ITALIC, 100));
+                g.drawString("X WINS!", 250, 750);
+                g.drawRect(x, y, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+            }
+            else if(marker.equals(TicTacToe.O_MARKER))
+            {
+                g.drawImage(b.getImageO(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+                g.setColor(Color.black);
+                g.setFont(new Font("TimesRoman", Font.ITALIC, 100));
+                g.drawString("O WINS!", 250, 750);
+                g.drawRect(x, y, b.BOARD_WIDTH, b.BOARD_HEIGHT);
+            }
+        }
+
+        else if(marker.equals(TicTacToe.X_MARKER))
+        {
+            g.drawImage(b.getImageX(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+        }
+
+        else if(marker.equals(TicTacToe.O_MARKER))
+        {
+            g.drawImage(b.getImageO(), y, x, b.BOARD_WIDTH, b.BOARD_HEIGHT, b);
+        }
     }
 }

@@ -44,12 +44,10 @@ public class TicTacToe
      */
     public TicTacToe() {
         // Initialize Squares in the board
-        window = new TicTacToeViewer(this);
-
         this.board = new Square[3][3];
         for(int row = 0; row < this.board.length; row++) {
             for(int col = 0; col< this.board[row].length; col++) {
-                this.board[row][col] = new Square(row, col, window);
+                this.board[row][col] = new Square(row, col);
             }
         }
 
@@ -59,6 +57,7 @@ public class TicTacToe
         this.winner = BLANK;
         this.winIndex = -1;
         this.winDirection = -1;
+        window = new TicTacToeViewer(this);
     }
 
     /******************** Methods You May Find Helpful ********************/
@@ -108,8 +107,8 @@ public class TicTacToe
     public void run() {
         Scanner input = new Scanner(System.in);
 
+        window.repaint();
         System.out.println("Welcome to Tic Tac Toe!");
-
         // Loop until there is a winner or no more turns
         while(!this.checkWin() && this.checkTurn()) {
             this.printBoard();
@@ -122,10 +121,10 @@ public class TicTacToe
             } else {
                 System.out.println("That space is taken, or you entered an invalid row/col");
             }
-            window.repaint();
         }
 
         this.printBoard();
+        window.repaint();
         this.isGameOver = true;
 
         // Determine if there was a winner
@@ -141,6 +140,7 @@ public class TicTacToe
                 System.out.println("X Wins!");
             }
         }
+        //window.repaint();
     }
 
 
@@ -153,9 +153,12 @@ public class TicTacToe
     private void takeTurn(int row, int col) {
         if(this.turn % 2 == 0) {
             this.board[row][col].setMarker(X_MARKER);
+            window.repaint();
         }
+
         else {
             this.board[row][col].setMarker(O_MARKER);
+            window.repaint();
         }
         this.turn++;
     }
@@ -195,7 +198,7 @@ public class TicTacToe
             this.winDirection = diag;
             return true;
         }
-
+        window.repaint();
         return false;
     }
 
@@ -279,7 +282,6 @@ public class TicTacToe
             System.out.print(row + " ");
             for(Square item : array) {
                 System.out.print(item + " ");
-
             }
             row++;
             System.out.println();
